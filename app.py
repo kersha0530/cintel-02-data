@@ -13,7 +13,7 @@ app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP])
 # Define the layout of the app
 app.layout = dbc.Container([
     dbc.Row(
-        dbc.Col(html.H1("Palmer Penguins Dataset Exploration"), className="text-center mb-4")
+        dbc.Col(html.H1("Kersha Palmer Penguins Dataset Exploration"), className="text-center mb-4")
     ),
     dbc.Row(
         [
