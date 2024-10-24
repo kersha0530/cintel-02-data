@@ -9,12 +9,5 @@ The application allows users to explore the Palmer Penguins dataset by viewing a
 ## Installation
 To install and run the application, follow these steps:
 
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/yourusername/penguins-exploration.git
-   cd penguins-exploration
-2.python -m venv myenv
-.\myenv\Scripts\activate  # On Windows
-3. pip install -r requirements.txt
-4. python app.py
+y
 
