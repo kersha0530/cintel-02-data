@@ -88,21 +88,31 @@ with ui.layout_columns():
 
 
     @render_plotly
-    def plot2():
-        return px.histogram(px.data.tips(), y="total_bill")
+    def plotly_histogram():
+        # Plotly histogram showing the distribution of the selected attribute for the selected species
+        return px.histogram(penguins_df, x="flipper_length_mm", y="bill_length_mm", color="species", 
+                          title="Flipper Length vs. Bill Length")
 
     @render_plotly
     def plotly_scatterplot():
         # Scatterplot of flipper length vs. bill length with species colored
         return px.scatter(penguins_df, x="flipper_length_mm", y="bill_length_mm", color="species", 
                           title="Flipper Length vs. Bill Length")
-    @render.plot
-    def seaborn_histogram():
-        # Seaborn histogram showing the body mass of penguins
-        fig, ax = plt.subplots()
-        sns.histplot(data=penguins_df, x="body_mass_g", hue="species", multiple="stack", ax=ax)
-        ax.set_title("Body Mass Distribution (Seaborn)")
-        return fig
+
+
+@render.plot
+def seaborn_histogram():
+    # Ensure the dataset is loaded
+    penguins_df = dat()
+    
+    # Seaborn histogram showing the body mass of penguins
+    fig, ax = plt.subplots()
+    sns.histplot(data=penguins_df, x="body_mass_g", hue="species", multiple="stack", ax=ax)
+    ax.set_title("Body Mass Distribution (Seaborn)")
+    ax.set_xlabel("Mass (g)")
+    ax.set_ylabel("Count")
+    return fig
+
 
     @render_plotly
     def plotly_histogram():
@@ -119,5 +129,4 @@ with ui.layout_columns():
     def penguins_table():
         # Render full dataset as a table
         return penguins_df
-
 
