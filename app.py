@@ -21,10 +21,48 @@ def dat():
     infile = Path(__file__).parent / "penguins.csv"
     return pandas.read_csv(infile)
 
+# Define the reactive dataset function
+@reactive.Calc
+def filtered_data():
+    data = penguins_df[
+        penguins_df['species'].isin(input.selected_species_list()) &
+        penguins_df['island'].isin(input.selected_island_list())
+    ]
+    return
+
 from shiny.express import ui
 
-with ui.sidebar(bg="#f8f8f8"):  
-    "Sidebar"  
+with ui.sidebar(bg="#f8f8f8"):
+    ui.input_slider("n", "N", 0, 100, 20)
+    # Create a checkbox group input for penguin species
+    ui.input_checkbox_group(
+        "checkbox_group", 
+        "Penguin Species", 
+        {
+            "Chinstrap": "Chinstrap",
+            "Gentoo": "Gentoo",
+            "Adelie": "Adelie",
+        }
+    )
+    # Create a checkbox group input for islands
+    ui.input_checkbox_group(
+        "island_checkbox_group", 
+        "Select Islands", 
+        {
+            "Biscoe": "Biscoe",
+            "Dream": "Dream",
+            "Torgersen": "Torgersen"
+        }
+    )
+
+ 
+    
+
+
+@render.text
+def value():
+    return ", ".join(input.checkbox_group())
+
 
 "Main content"  
 
@@ -47,9 +85,7 @@ with ui.navset_card_underline():
 ui.page_opts(title="Kersha Palmer Penguin Dataset Exploration", fillable=True)
 with ui.layout_columns():
 
-    @render_plotly
-    def plot1():
-        return px.histogram(px.data.tips(), y="tip")
+
 
     @render_plotly
     def plot2():
@@ -83,4 +119,5 @@ with ui.layout_columns():
     def penguins_table():
         # Render full dataset as a table
         return penguins_df
+
 
